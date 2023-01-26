@@ -1,7 +1,7 @@
 import csv 
 infile = open("EmployeePay.csv", "r")
 csv_reader = csv.reader(infile)
-next(csv_reader,None) ##skip the header 
+next(csv_reader) ##skip the header 
 
 header = ["ID", "EmployeeName", "TotalPay" ]
 

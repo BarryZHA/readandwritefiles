@@ -8,7 +8,7 @@ writer.writerow(["CustomerID", "GrandTotal"])
 # Keep track of the current customer ID and GrandTotal
 current_customer = None
 current_total = 0
-next(csv_reader,None) #skip header  
+next(csv_reader) #skip header  
 # Iterate through each row
 for row in csv_reader:
     # Get the customer's ID
