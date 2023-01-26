@@ -1,27 +1,26 @@
 import csv 
 infile = open("sales.csv", "r")
 csv_reader = csv.reader(infile)
-next(csv_reader,None)#skip header  
 
-SalesData = {}
-
-header = ["CustomerID", "SubTotal", "TaxAmount", "Freight", "GrandTotal"]
-print(header)
-
-##insert data 
-for row in csv_reader: 
-    CustomerID = row[0]
-    SubTotal = "{:.2f}".format(float(row[3]))
-    TaxAmount = "{:.2f}".format(float(row[4]))
-    Freight = "{:.2f}".format(float(row[5]))
-    GrandTotal = SubTotal + TaxAmount + Freight 
-
-    if CustomerID in SalesData: 
-        SalesData[CustomerID][0] += SubTotal 
-        SalesData[CustomerID][1] += TaxAmount
-        SalesData[CustomerID][2] += Freight 
-        SalesData[CustomerID][3] += GrandTotal 
-    else: 
-        SalesData[CustomerID] += [SubTotal, TaxAmount, Freight, GrandTotal]
+outfile = open("salesreport.csv", "w", newline="")
+writer = csv.writer(outfile)
+writer.writerow(["CustomerID", "GrandTotal"])
+# Keep track of the current customer ID and GrandTotal
+current_customer = None
+current_total = 0
+next(csv_reader,None) #skip header  
+# Iterate through each row
+for row in csv_reader:
+    # Get the customer's ID
+    customer_id = row[0]
+    if current_customer != customer_id:
+        if current_customer is not None:
+            writer.writerow([current_customer, "{:.2f}".format(current_total)])
+        current_customer = customer_id
+        current_total = 0
+    current_total += float(row[3]) + float(row[4]) + float(row[5])
+#Write the last cutomer's ID and GrandTotal 
+writer.writerow([current_customer, current_total])
 
 infile.close()
+outfile.close()
