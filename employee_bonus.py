@@ -8,7 +8,6 @@ header = ["ID", "EmployeeName", "TotalPay" ]
 print(header)
 
 for row in csv_reader: 
-    print([row[0], row[1] + " " + row[2], "{:.2f}".format(float((int(row[3]) * ( 1 + float(row[4])))))])
+    print([row[0], row[1] + " " + row[2], format(float((int(row[3]) * ( 1 + float(row[4])))),'.2f')])
 
 infile.close()
-

@@ -15,7 +15,7 @@ for row in csv_reader:
     customer_id = row[0]
     if current_customer != customer_id:
         if current_customer is not None:
-            writer.writerow([current_customer, "{:.2f}".format(current_total)])
+            writer.writerow([current_customer, format(current_total,'.2f')])
         current_customer = customer_id
         current_total = 0
     current_total += float(row[3]) + float(row[4]) + float(row[5])
